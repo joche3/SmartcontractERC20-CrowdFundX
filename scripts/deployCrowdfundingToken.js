@@ -1,6 +1,7 @@
 const hre = require("hardhat");
 
 async function main() {
+
     // Parámetros del contrato
     const name = "CrowdFundX Token";
     const symbol = "CFT";
@@ -24,9 +25,9 @@ async function main() {
         rate
     );
 
-    await crowdfundingToken.deployed();
+    await crowdfundingToken.waitForDeployment();
 
-    console.log("CrowdfundingToken desplegado en:", crowdfundingToken.address);
+    console.log("CrowdfundingToken desplegado en:", crowdfundingToken.target);
 }
 
 main()
@@ -34,6 +35,4 @@ main()
   .catch((error) => {
     console.error(error);
     process.exit(1);
-});
-
-npx hardhat ignition deploy ./scripts/deployCrowdfundingToken.js --network sepolia
+})
