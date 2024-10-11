@@ -28,6 +28,20 @@ async function main() {
     await crowdfundingToken.waitForDeployment();
 
     console.log("CrowdfundingToken desplegado en:", crowdfundingToken.target);
+
+
+    // Esperar confirmaciones en la red (opcional)
+    const wait_confirmations = 3;
+    await crowdfundingToken.deploymentTransaction().wait(wait_confirmations);
+
+    // Verificar el contrato en Etherscan
+    console.log('Verificando el contrato en Etherscan...');
+   
+    await run("verify:verify", {
+        address: crowdfundingToken.target,
+        constructorArguments:[name, symbol, initialMint, cap, saleStart, saleEnd, rate],
+        contract: "contracts/Crowdfunding/CrowdfundingToken.sol:CrowdfundingToken",
+    })
 }
 
 main()
